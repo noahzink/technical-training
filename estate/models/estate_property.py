@@ -5,12 +5,11 @@ class EstateProperty(models.Model):
     _description = "Estate Property"
 
     name = fields.Char('Name', required=True)
-    create_date = fields.Datetime("Creation date", readonly=True)
     description = fields.Text('Description')
-    postcode = fields.Char('Postcode')
-    data_availability = fields.Datetime("Data_Availability")
+    postcode = fields.Char('Postcode')    
+    date_availability = fields.Datetime("Data_Availability", copy=False)
     expected_price = fields.Float("Expected price", required=True)
-    selling_price = fields.Float("Selling Price")
+    selling_price = fields.Float("Selling Price", readonly=True, copy=False)
     bedrooms = fields.Integer("Bedrooms", index=True)
     living_area = fields.Integer("Living area")
     facades = fields.Integer("Facades")
@@ -21,7 +20,13 @@ class EstateProperty(models.Model):
         string='Orientation',
         selection=[('north', 'North'), ('south', 'South'), ('east', 'East'), ('west', 'West')],
         help="Orientation is used to separate north and south and east and west")
+    state = fields.Selection(
+         string='State',
+        selection=[('new', 'New'), ('offer', 'Offer'), ('received', 'Received'), ('offer', 'Offer'),        ('accepte', 'Accepte'), ('sold', 'Sold'), ('cancelled', 'Cancelled')],
+        help="Orientation is used to separate north and south and east and west", 
+        required=True, default="new")
 
+    active = fields.Boolean(default=True)
         
     
     
